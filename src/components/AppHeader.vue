@@ -14,7 +14,11 @@
             <img src="../assets/img/logo3.jpg" alt="" class="logo3">
         </div>
         <div class="navbar-user">
-            <i class="fa-solid fa-user"></i> Đăng Nhập
+          
+            <router-link :to="{name: 'login'}">
+                <i class="fa-solid fa-user"></i>
+                Đăng nhập
+            </router-link>
             
         </div>
 
