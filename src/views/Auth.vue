@@ -39,39 +39,40 @@
 
 
     </div>
-
+    <!-- Quyền lợi khi hiến máu -->
     <div class="tc">
       <div class="container">
 
         <div class="row">
 
-          <div class="col-sm-3" @click="OpenModalRegister" v-for="product in products" :key="product._id">
-            <img :src="product.imgURL" alt="Hình ảnh" class="imgsp" />
+          <div class="col-sm-3" v-for="product in products" :key="product._id">
+            <router-link :to="{ name: 'product', params: { id: product._id }  }" class="nav-link text-dark">
+              <img :src="product.imgURL" alt="Hình ảnh" class="imgsp" />
 
 
 
-            <div class="ten">
-              <p>{{ product.TenHH }}</p>
-              <div class="ngoi-sao">
-                <i class="fa-solid fa-star text-warning"></i>
-                <i class="fa-solid fa-star text-warning"></i>
-                <i class="fa-solid fa-star text-warning"></i>
-                <i class="fa-solid fa-star text-warning"></i>
-                <i class="fa-solid fa-star text-warning"></i>
+              <div class="ten">
+                <p>{{ product.TenHH }}</p>
+                <div class="ngoi-sao">
+                  <i class="fa-solid fa-star text-warning"></i>
+                  <i class="fa-solid fa-star text-warning"></i>
+                  <i class="fa-solid fa-star text-warning"></i>
+                  <i class="fa-solid fa-star text-warning"></i>
+                  <i class="fa-solid fa-star text-warning"></i>
+                </div>
+                <p><b>{{ product.Gia }} VNĐ</b></p>
               </div>
-              <p><b>{{ product.Gia }} VNĐ</b></p>
-            </div>
-
-
-            <homeModal :isShowModalRegister="isShowModalRegister" :closeModalRegister="closeModalRegister" class="homeNodal" />
+            </router-link>
           </div>
+
+
 
 
 
 
         </div>
 
-        <!-- 3 -->
+
 
 
 
@@ -170,7 +171,7 @@
 
   </div>
 </template>
-
+  
 <script>
 import ProductService from '../services/hanghoa.service';
 
@@ -188,6 +189,8 @@ export default {
     async retrieveProducts() {
       try {
         this.products = await ProductService.getAll();
+        
+
       } catch (error) {
         console.error(error);
       }
@@ -201,20 +204,6 @@ export default {
 }
 
 
-</script>
-<script setup>
-import { ref } from "vue";
-import homeModal from "./homeModal.vue";
-
-
-const isShowModalRegister = ref(false)
-
-const OpenModalRegister = () => {
-  isShowModalRegister.value = true;
-};
-const closeModalRegister = () => {
-  isShowModalRegister.value = false;
-};
 </script>
   
 <style scoped>
@@ -407,9 +396,6 @@ const closeModalRegister = () => {
   background-color: #f0f0f0; /* Change the background color on hover */
   transition: background-color 0.3s ease; /* Add a smooth transition effect */
 }
-.homeModal{
-  background-color: rgba(0, 0, 0, 0.25)!important;
 
-}
 
 </style>

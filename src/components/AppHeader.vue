@@ -1,56 +1,234 @@
 <template>
-    <nav class="navbar navbar-expand navbar-dark bg-primary">
-        <a href="" class="navbar-brand">
-            <router-link :to="{ name: 'trangchu' }" class="nav-link">
+    <div>
+        <nav class="navbar navbar-expand navbar-dark bg-white">
+            <a href="" class="navbar-brand">
+                <router-link :to="{ name: 'trangchu' }" class="nav-link">
 
-                <img src="../assets/img/logo1.png" alt="" class="rounded-circle logo-img">
-                <span class="logo-text text-white">CHÙA TUỆ GIÁC</span>
-                
-            </router-link>
+                    <img src="../assets/img/download.jpg" alt="" class="rounded-circle logo-img mr-2">
+                    <span class="logo-text text-success custom-logo-text">Shop Cereal</span>
 
-        </a>
-        <div class="logo-container">
-            <img src="../assets/img/logo2.jpg" alt="" class="logo2">
-            <img src="../assets/img/logo3.jpg" alt="" class="logo3">
+                </router-link>
+
+            </a>
+            <div class="logo-container" :style="logoContainerStyles">
+                <img src="../assets/img/nss.png" alt="" class="logo1">
+
+            </div>
+            <div>
+                <div class="navbar-user" v-if="!isLoggedIn" @click="loginUser()">
+                    <router-link :to="{ name: 'login' }" class="login">
+                        <i class="fa-solid fa-user"></i> Đăng Nhập
+
+                    </router-link>
+
+                </div>
+
+                <div class="dropdown" v-else>
+                    <button class="btn btn-secondary " type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                        aria-haspopup="true" aria-expanded="false">
+                        <img src="@/assets/img/chitonngoc.jpg" class="rounded-circle" height="55" width="60" alt="User"
+                            loading="lazy" />
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                        <button type="button" class="btn btn-success" @click="logout">
+                            Đăng xuất
+
+                        </button>
+
+
+                        <!-- 
+                        <div>
+                            <button @click="OpenModalRegister" class="btn btn-success">Thay đổi thông tin </button>
+                        </div>
+
+                        <AModal :isShowModalRegister="isShowModalRegister" :closeModalRegister="closeModalRegister" /> -->
+
+                        <div>
+                            <button @click="OpenModalRegister" class="btn btn-success">Thông tin</button>
+                        </div>
+
+                        <AModal :isShowModalRegister="isShowModalRegister" :closeModalRegister="closeModalRegister"
+                            :userInformation="dataUser" />
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </nav>
+        <div>
+            <nav class="navbar navi">
+                <div class="nav-item" style="margin-right: 16px; color: white;margin-left: auto;">
+                    <router-link :to="{ name: 'auth' }" class="nav-link" style="color: #ffffff;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-home-2" width="24"
+                            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M5 12l-2 0l9 -9l9 9l-2 0"></path>
+                            <path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2 -2v-7"></path>
+                            <path d="M10 12h4v4h-4z"></path>
+                        </svg>
+
+
+                        Trang Chủ
+
+                    </router-link>
+
+                </div>
+                <div class="nav-item" style="margin-right: 16px; color: white; ">
+                    <router-link :to="{ name: 'psuccess' }" class="nav-link" style="color: #ffffff;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-shopping-cart-question"
+                            width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"></path>
+                            <path d="M4 19a2 2 0 1 0 4 0a2 2 0 0 0 -4 0"></path>
+                            <path d="M13.5 17h-7.5v-14h-2"></path>
+                            <path d="M6 5l14 1l-.714 5m-4.786 2h-8.5"></path>
+                            <path d="M19 22v.01"></path>
+                            <path d="M19 19a2.003 2.003 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483"></path>
+                        </svg>
+                        Đơn hàng của bạn
+                    </router-link>
+
+
+
+                </div>
+                <div :class="'nav-item'" style="color: white;margin-right: auto;"></div>
+            </nav>
+
         </div>
-        <div class="navbar-user">
-          
-            <router-link :to="{name: 'login'}">
-                <i class="fa-solid fa-user"></i>
-                Đăng nhập
-            </router-link>
-            
-        </div>
 
-    </nav>
-    <nav class="navbar navi">
-        <div class="nav-item" style="margin-right: 16px; color: white;margin-left: auto;">
-            <router-link :to="{ name: 'trangchu' }" class="nav-link" style="color: #ffffff;">
 
-                Trang Chủ
 
-            </router-link>
 
-        </div>
-        <div class="nav-item" style="margin-right: 16px; color: white; ">Khóa Tu</div>
-        <div class="nav-item" style="margin-right: 16px; color: white; ">Nghi thức</div>
-        <div class="nav-item" style="margin-right: 16px; color: white; ">Kinh sách</div>
-        <div :class="'nav-item'" style="color: white;margin-right: auto;">Tin Tức</div>
-    </nav>
+
+
+    </div>
 </template>
-<style>
+
+
+<script>
+
+
+export default {
+    components: {
+        AModal,
+
+    },
+    data() {
+        return {
+            isLoggedIn: false,
+
+            AModalVisible: false,
+
+        };
+
+    },
+
+
+
+    mounted() {
+        // Khai báo biến intervalId bằng let hoặc const
+        let intervalId;
+
+        // Gọi đoạn code mỗi 5 giây và lưu giá trị được trả về bởi setInterval
+        intervalId = setInterval(() => {
+            const userJs = window.localStorage.getItem('user');
+            const user = JSON.parse(userJs);
+
+
+            if (user) {
+                // console.log('user', user);
+                this.isLoggedIn = true;
+            }
+        }, 100); // Gọi mỗi 0,1 giây 
+
+        // Để dừng việc gọi đoạn code sau một thời gian hoặc khi điều kiện nào đó được thỏa mãn, bạn có thể sử dụng clearInterval(intervalId)
+
+        // Ví dụ: Dừng việc gọi đoạn code sau 300 giây
+        setTimeout(() => {
+            clearInterval(intervalId);
+        }, 3000000);
+    },
+
+
+
+
+    methods: {
+
+
+
+        logout() {
+            window.localStorage.removeItem('user');
+            this.isLoggedIn = false;
+
+
+            this.$router.push({ name: "trangchu" });
+        },
+        loginUser() {
+
+            this.$router.push({ name: "login" });
+        },
+        openModal() {
+            this.AModalVisible = false;
+        },
+
+
+    }
+};
+</script>
+
+<!-- <script setup>
+import { ref } from "vue";
+import AModal from "./AModal.vue";
+
+
+const isShowModalRegister = ref(false)
+
+const OpenModalRegister = () => {
+    isShowModalRegister.value = true;
+};
+const closeModalRegister = () => {
+    isShowModalRegister.value = false;
+};
+</script> -->
+<script setup>
+import { ref } from "vue";
+import AModal from "./AModal.vue";
+
+const isShowModalRegister = ref(false);
+const dataUser = ref({
+    Email: "tienb2014620@gmail.com",
+    HoTen: "Bùi Văn Tiền",
+    SoDienThoai: "0123456789",
+    DiaChi: "Cần Thơ"
+});
+
+const OpenModalRegister = () => {
+    isShowModalRegister.value = true;
+};
+
+const closeModalRegister = () => {
+    isShowModalRegister.value = false;
+};
+</script>
+
+
+<style scoped>
 /* CSS để bo tròn ảnh và thu nhỏ nó */
 .navbar {
     display: flex;
     justify-content: space-between;
-    background-color: #000044!important;
-   
+
+
 }
 
 .logo-img {
     border-radius: 50%;
     /* Bo tròn ảnh */
-    width: 30%;
+    width: 65px;
     /* Thu nhỏ ảnh thành 1/4 kích thước ban đầu */
 }
 
@@ -58,25 +236,14 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin-right: 16%;
+    margin-right: 25%;
 }
 
-.logo2 {
-    width: 18%;
-    height: auto;
-    border-radius: 50% ;
-    margin-right: 10px;
+.logo1 {
+    width: 50%;
+    height: 60px;
+    margin-left: 200px;
 }
-.logo3 {
-    width: 24%;
-    height: auto;
-    border-radius: 50% ;
-    margin-left: 10px;
-}
-.navbar-user{
-    color: #ffff;
-}
-
 
 
 
@@ -94,15 +261,18 @@
 
 /* CSS để định dạng văn bản */
 .logo-text {
-    font-size: 24px;
+    font-size: 18px;
+    /* Điều chỉnh kích thước font chữ */
     color: white;
+    /* Điều chỉnh màu sắc của văn bản */
     text-align: center;
-    margin-left: 26px;
+    /* Căn giữa văn bản */
     margin-top: 10px;
+    /* Khoảng cách từ logo đến văn bản (điều chỉnh giá trị này theo nhu cầu) */
 }
 
 .navi {
-    background-color: #7b650c!important;
+    background-color: #1b7931;
     /* Màu nền xanh */
     display: flex;
     align-items: center;
@@ -156,5 +326,22 @@
     text-decoration: none;
     color: black;
 
+}
+
+/* 
+.dropdown-menu {
+    margin-left: -70px;
+} */
+.custom-logo-text {
+    /* Apply your custom styles for the "Shop Cereal" text here */
+    font-family: 'Your Custom Font', sans-serif;
+    /* Example: Change font family to a custom font */
+    font-size: 24px;
+    /* Example: Change font size to 24 pixels */
+    font-weight: bold;
+    /* Example: Make the text bold */
+    color: #ff6600;
+    /* Example: Change text color to orange */
+    /* Add any other styles you want to customize the text appearance */
 }
 </style>
