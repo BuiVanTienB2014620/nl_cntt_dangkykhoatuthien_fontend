@@ -11,7 +11,7 @@
                   <!-- Navbar brand -->
                   <a class="navbar-brand mt-2 mt-lg-0" href="#">
                       <img class="img-rounded" alt="Cinque Terre"
-                          src="https://img.freepik.com/free-vector/set-wheats-ears_90220-297.jpg"
+                          src="https://img.freepik.com/free-photo/buddha-statue-with-natural-water-landscape_23-2150774139.jpg?size=626&ext=jpg&ga=GA1.1.1039428275.1684508452&semt=sph"
                           border-radius="50%" loading="lazy" />
                   </a>
                   <!-- Left links -->
@@ -48,7 +48,7 @@ export default {
 
 <style scoped>
 .headera {
-  background-color: rgb(12, 113, 61);
+  background-color: #c18000;
 }
 
 .img-rounded{

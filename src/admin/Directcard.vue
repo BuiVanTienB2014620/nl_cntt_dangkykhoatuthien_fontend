@@ -1,41 +1,38 @@
 <template>
     <div class="row">
         <div class="col-sm-12" style="text-align: center;">
-            <h3>Đơn đặt hàng</h3>
-            <label><b>Tổng số đơn hàng:</b></label>
-            <label>1</label>
-
+            <h3>Đăng ký khóa tu</h3>
+          
         </div>
 
-        <div class="col-sm-12">
+        <div class="col-sm-6">
 
             <div>
-                <label><b>Tổng doanh thu:</b></label>
+                <label><b>Tổng học phí:</b></label>
                 <label>{{ totalAmount }}.000 vnđ</label>
             </div>
-            <div v-for="order in filteredOrders" :key="order.customerInfo._id">
-                <div><b>Người giao:</b>{{ order.employeeInfo.name }} </div>
+            <div v-for="order in orders" :key="order._id">
+                <div>----------------------------------------------</div>
+                <div><b>Giảng sư:</b>{{ order.employeeInfo.name }} </div>
 
-            </div>
 
-
-            <div>
-                <label><b>Thông tin khách hàng:</b></label>
-                <ul v-for="order in filteredOrders" :key="order.customerInfo._id">
+                <label><b>Thông tin thiền sinh:</b></label>
+                <ul>
                     <li>
                         <b>Tên:</b>{{ order.customerInfo.name }}
 
                     </li>
                     <li> <b>Số điện thoại:</b> {{ order.customerInfo.phoneNumber }} </li>
                     <li><b>Địa chỉ:</b>{{ order.customerInfo.address }}</li>
-                    <li> <b>Ngày đặt hàng:</b> {{ getCurrentDate() }}</li>
+                    <li> <b>Ngày đăng ký:</b> {{ getCurrentDate() }}</li>
                     <li>
 
-                        <b>Ngày giao hàng:</b> {{ getExpectedDeliveryDate() }}
+                        <b>Ngày bắt đầu:</b> {{ getExpectedDeliveryDate() }}
 
                     </li>
 
                 </ul>
+                <div>----------------------------------------------</div>
             </div>
             <div>
                 <label><b>Trạng thái:</b></label>
@@ -43,22 +40,18 @@
 
 
             </div>
-
-
-
-
-            <h4>Sản phẩm đã đặt hàng:</h4>
+            <h4>Khóa học đã đăng ký:</h4>
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Tên sản phẩm</th>
+                        <th scope="col">Tên khóa học</th>
                         <th scope="col">Giá</th>
                         <th scope="col">Số lượng</th>
                         <th scope="col">Thành tiền</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="cart in filteredCarts" :key="cart.userDetails._id">
+                    <tr v-for="cart in carts" :key="cart._id">
                         <td>{{ cart.productDetails.TenHH }}</td>
                         <td>{{ 1 * cart.productDetails.Gia }}.000 VNĐ</td>
                         <td>{{ cart.SoLuong }}</td>
@@ -67,6 +60,11 @@
                 </tbody>
             </table>
             <button class="btn btn-success" @click="approveOrder">Duyệt</button>
+
+
+
+
+
 
         </div>
 
@@ -88,7 +86,7 @@ export default {
         return {
             carts: [],
             orders: [],
-            userId: '654cfdaa4d0821b70a923ff6',
+            // userId: '654cfdaa4d0821b70a923ff6',
             orderStatus: 'Chưa duyệt',
 
         };
@@ -102,11 +100,17 @@ export default {
                 return total + cart.productDetails.Gia * cart.SoLuong;
             }, 0);
         },
+        // filteredCarts() {
+        //     return this.carts.filter(cart => cart.userDetails._id === this.userId);
+        // },
+        // filteredOrders() {
+        //     return this.orders.filter(order => order.customerInfo._id === this.userId);
+        // },
         filteredCarts() {
-            return this.carts.filter(cart => cart.userDetails._id === this.userId);
+            return this.carts.filter(cart => cart._id === this.userId);
         },
         filteredOrders() {
-            return this.orders.filter(order => order.customerInfo._id === this.userId);
+            return this.orders.filter(order => order._id === this.userId);
         },
     },
     methods: {
@@ -120,7 +124,7 @@ export default {
         getExpectedDeliveryDate() {
             const currentDate = new Date();
             const expectedDeliveryDate = new Date(currentDate);
-            expectedDeliveryDate.setDate(currentDate.getDate() + 3);
+            expectedDeliveryDate.setDate(currentDate.getDate() + 10);
 
             const formattedDate = `${expectedDeliveryDate.getFullYear()}-${(expectedDeliveryDate.getMonth() + 1)
                 .toString()
@@ -152,21 +156,23 @@ export default {
                 console.error(error);
             }
         },
-        approveOrder() {
-            try {
-                // Update the orderStatus in data
-                this.orderStatus = 'Đã duyệt';
+        async approveOrder() {
+        try {
+            // Update the orderStatus in data
+            this.orderStatus = 'Đã duyệt';
 
-                // Optionally, if you want to update the orderStatus in each order object,
-                // you can loop through filteredOrders and update the orderStatus property.
-                for (const order of this.filteredOrders) {
-                    order.orderStatus = 'Đã duyệt';
-                }
+            // Delete all orders and carts
+            await OrderService.deleteAll(); // Assuming OrderService has a method to delete all orders
+            await CartService.deleteAll();  // Assuming CartService has a method to delete all carts
 
-            } catch (error) {
-                console.error(error);
-            }
+            // Clear the local data arrays
+            this.orders = [];
+            this.carts = [];
+
+        } catch (error) {
+            console.error(error);
         }
+    },
 
 
     },

@@ -49,7 +49,7 @@
                 </table>
 
                 <div>
-                    <div style="background-color: #CCC;"><b>Tổng đơn hàng:</b></div>
+                    <div style="background-color: #CCC;"><b>Tổng học phí:</b></div>
                     <div>{{ totalAmount }}.000 vnđ</div>
                 </div>
                 <router-link :to="{ name: 'auth' }">
@@ -63,7 +63,7 @@
                             <path d="M5 12l6 -6"></path>
                         </svg>
 
-                        Tiếp tục mua hàng</button>
+                        Tiếp tục xem khóa tu</button>
 
                 </router-link>
 
@@ -72,86 +72,101 @@
 
 
 
+
+
             </div>
+
             <div class="col-sm-3">
-                <h5 class="text-dark">THÔNG TIN KHÁCH HÀNG</h5>
-                <form class="text-dark" style="color:#e3e3e3" @submit.prevent="submitForm">
-
-                    <label>Họ và tên:
-                        <input type="text" required v-model="customer.hoten" placeholder="Nhập họ và tên">
-                    </label>
-                    <label>Số điện thoại:
-                        <input type="text" required v-model="customer.sdt" placeholder="Nhập số điện thoại">
-                    </label>
+                <h5 class="text-dark">THÔNG TIN ĐĂNG KÝ</h5>
+                <div v-for="(cart, index) in uniqueUsers" :key="index">
                     <div>
+                        <p><b>Họ và Tên :</b>{{ cart.userDetails.name }}</p>
+                        <p><b>SĐT :</b>{{ cart.userDetails.phoneNumber }}</p>
+                        <p><b>Địa chỉ :</b>{{ cart.userDetails.address }}</p>
 
-
-                        <div> <b> Ngày đặt hàng:</b> {{ getCurrentDate() }}</div>
-                        <div> <b> Ngày giao hàng:</b> {{ getExpectedDeliveryDate() }}(dự kiến)</div>
                     </div>
 
-                    <h5>CHỌN CÁCH THỨC NHẬN HÀNG</h5>
-                    <label>
-                        <input type="radio" required v-model="customer.postage" value="Yes" />Giao tận nơi
-                    </label>
-                    <label>
-                        <input type="radio" required v-model="customer.postage" value="No" />Nhận tại cửa hàng
-                    </label>
-                    <div v-if="customer.postage === 'Yes'">
-                        <div class="container">
-                            <h5>Chọn địa chỉ nhận hàng:</h5>
-                            <input type="text">
+                </div>
+                <div>
+                    <form class="text-dark" style="color:#e3e3e3" @submit="submitOrder">
+                        <label> <b>MSGS: </b>
+                            <input type="text" required v-model="orderLocal.MSNV" placeholder="Nhập mã số nhân viên">
+
+                        </label>
+
+                        <div>
 
 
+                            <div> <b> Ngày đăng ký:</b> {{ getCurrentDate() }}</div>
 
                         </div>
-                    </div>
-                    <div v-else>
-                        <div href="/"><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Khu 2, Đ. 3/2, P. Xuân Khánh,
-                            Q. Ninh Kiều, TP. CT</div>
-                    </div>
 
 
-                    <button
-                        style="display: block; overflow: hidden; color: #fff; text-align: center; height: 50px; margin: 10px auto; width: 100%; border-radius: 4px; background: #00ab9f; cursor: pointer;">
+                        <button @click="addToOrder"
+                            style="display: block; overflow: hidden; color: #fff; text-align: center; height: 50px; margin: 10px auto; width: 100%; border-radius: 4px; background: #00ab9f; cursor: pointer;">
 
-                        Đặt hàng
+                            Đăng Ký
 
-                    </button>
-                </form>
+                        </button>
+                    </form>
+
+                </div>
+
+
             </div>
+        </div>
+        <div class="col-sm-12  align-items-cente">
+            <h5>Các giảng sư</h5>
+
+            <div class="d-flex align-items-center justify-content-center">
+                <div class="d-flex align-items-center justify-content-center" v-for="employee in employees"
+                    :key="employee._id">
+
+                    <img :src="employee.imgURL" alt="" style="width: 100px; height: 100px" class="rounded-circle" />
+                    <div class="ms-3">
+                        <p class="fw-bold mb-1">{{ employee.name }}</p>
+                        <p class="text-muted mb-0"> <b>Mã số giảng sư:</b> {{ employee._id }}</p>
+                    </div>
+                </div>
+
+            </div>
+
+
         </div>
     </div>
 </template>
   
 <script>
+import OrderService from '../services/dathang.service';
+import EmployeeService from '../services/nhanvien.service';
 
 import CartService from '../services/giohang.service';
 export default {
+    emits: ["submit:order"],
     data() {
         return {
+            orders: [],
             carts: [],
+            employees: [],
 
             userId: '',
 
             deliveryDays: 3,
+            orderLocal: {
+                MSKH: '',
+                MSNV: '',
+                NgayDH: '',
+                TrangthaiDH: 'Đang xử lý',
 
-
-
-            customer: {
-                hoten: '',
-                sdt: '',
-                postage: 'Yes',
-                province: 'Hanoi',
-                district: 'Cau Giay',
-                ward: 'Dich Vong',
-                pt: 'Chuyển khoản qua ngân hàng',
             },
+
+
 
         };
     },
     props: {
         id: { type: String, required: true },
+        order: { type: Object, required: true },
     },
     computed: {
         filteredCarts() {
@@ -161,6 +176,17 @@ export default {
             return this.filteredCarts.reduce((total, cart) => {
                 return total + cart.productDetails.Gia * cart.SoLuong;
             }, 0);
+        },
+        uniqueUsers() {
+            // Use a Set to filter out duplicate user IDs
+            const uniqueUserIds = new Set();
+            return this.filteredCarts.filter((cart) => {
+                if (!uniqueUserIds.has(cart.userDetails._id)) {
+                    uniqueUserIds.add(cart.userDetails._id);
+                    return true;
+                }
+                return false;
+            });
         },
     },
     methods: {
@@ -173,17 +199,7 @@ export default {
                 .padStart(2, '0')}-${currentDate.getDate().toString().padStart(2, '0')}`;
             return formattedDate;
         },
-        getExpectedDeliveryDate() {
-            const currentDate = new Date();
-            const deliveryDate = new Date(currentDate);
-            deliveryDate.setDate(currentDate.getDate() + this.deliveryDays);
 
-            const formattedDeliveryDate = `${deliveryDate.getFullYear()}-${(deliveryDate.getMonth() + 1)
-                .toString()
-                .padStart(2, '0')}-${deliveryDate.getDate().toString().padStart(2, '0')}`;
-
-            return formattedDeliveryDate;
-        },
         calculateTotal(cart) {
             return cart.productDetails.Gia * cart.SoLuong;
         },
@@ -220,21 +236,7 @@ export default {
                 }
             }
         },
-        submitForm() {
-            // Check if name and phone number are filled
-            if (!this.customer.hoten || !this.customer.sdt) {
-                alert('Please enter your name and phone number.');
-                return;
-            }
 
-            // The rest of your form submission logic
-            // ...
-
-            // Redirect to the success page and pass the customer information
-            this.$router.push({
-                name: 'psuccess',
-            });
-        },
 
 
         decreaseQuantity() {
@@ -245,10 +247,55 @@ export default {
         increaseQuantity() {
             this.SoLuongHH++;
         },
+        async retrieveEmployees() {
+            try {
+                // Lấy tất cả nhân viên
+                const allEmployees = await EmployeeService.getAll();
+
+                // Lọc ra những nhân viên không có role là admin
+                this.employees = allEmployees.filter(employee => employee.role !== 'admin');
+            } catch (error) {
+                console.error(error);
+            }
+        },
+        submitOrder() {
+
+
+            this.$emit("submit:order", this.orderLocal);
+        },
+
+        async addToOrder() {
+            console.log('order.MSNV:', this.orderLocal.MSNV);
+            try {
+                // Get user ID from localStorage
+                const userJs = window.localStorage.getItem('user');
+                const user = JSON.parse(userJs);
+
+                // Create data object for the order
+                const data = {
+                    MSKH: user._id,
+                    MSNV: this.orderLocal.MSNV,  // Use orderLocal.MSNV from the form data
+                    NgayDH: this.getCurrentDate(),  // Use the current date
+                    TrangthaiDH: 'Đang xử lý',  // Set the initial status, you can change this as needed
+                };
+
+                // Call the OrderService to create the order
+                await OrderService.create(data);
+
+                // Redirect to the correct route
+                this.$router.push({ name: 'psuccess' });
+                // Replace 'your-route-name' with the actual name of the route you want to navigate to.
+            } catch (error) {
+                console.error(error);
+            }
+        },
+
 
 
     },
     created() {
+        console.log('Order object:', this.order);
+        this.retrieveEmployees();
         this.created();
     },
 
@@ -297,5 +344,9 @@ img {
 #quantity {
     margin: 0 10px;
     font-size: 18px;
+}
+
+.col-sm-9 {
+    margin-bottom: 20px;
 }
 </style>

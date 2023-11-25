@@ -61,7 +61,7 @@
                         </svg>
 
                         <router-link :to="{ name: 'admin-position' }" style="text-decoration: none; class " class="textp">
-                            Quản lí sản phẩm
+                            Quản lí khóa tu
                         </router-link>
                     </td>
 
@@ -81,7 +81,7 @@
                         </svg>
 
                         <router-link :to="{ name: 'dire' }" style="text-decoration: none; class " class="textp">
-                            Đơn kê đơn hàng
+                            Quản lí đăng ký khóa tu
                         </router-link>
                     </td>
 
@@ -134,7 +134,7 @@ export default {
 }
 
 .table thead tr th {
-    color: rgb(12, 113, 61);
+    color: #c18000;
 }
 
 .table tbody tr td {
@@ -151,13 +151,13 @@ export default {
 }
 
 .table tbody tr td .textp:hover {
-    color: rgb(12, 113, 61);
+    color: #c18000;
 }
 
 
 /* Change the text color and icon color on hover */
 .table tbody tr:hover td {
-    color: rgb(12, 113, 61);
+    color: #c18000;
     /* Change to the desired text color */
 }
 
@@ -169,7 +169,7 @@ export default {
     display: block;
     width: 100%;
     height: 1px;
-    background-color: rgb(12, 113, 61);
+    background-color: #c18000;
     /* Change to the desired line color */
 }
 

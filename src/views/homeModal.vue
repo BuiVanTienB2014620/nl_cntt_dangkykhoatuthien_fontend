@@ -35,7 +35,7 @@ const handleCancel = () => {
 
 <template>
     <div>
-      <a-modal :open="isShowModalRegister" :confirm-loading="confirmLoading" @cancel="handleCancel" title="Bạn cần đăng nhập để xem chi tiết sản phẩm">
+      <a-modal :open="isShowModalRegister" :confirm-loading="confirmLoading" @cancel="handleCancel" title="Bạn cần đăng nhập để xem chi khóa tu thiền">
         <div>
           <!-- Your modal content goes here -->
         </div>

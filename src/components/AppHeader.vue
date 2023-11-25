@@ -4,14 +4,14 @@
             <a href="" class="navbar-brand">
                 <router-link :to="{ name: 'trangchu' }" class="nav-link">
 
-                    <img src="../assets/img/download.jpg" alt="" class="rounded-circle logo-img mr-2">
-                    <span class="logo-text text-success custom-logo-text">Shop Cereal</span>
+                    <img src="../assets/img/logo1.png" alt="" class="rounded-circle logo-img mr-2">
+                    <span class="logo-text text-warning custom-logo-text">Chùa Tuệ Giác</span>
 
                 </router-link>
 
             </a>
             <div class="logo-container" :style="logoContainerStyles">
-                <img src="../assets/img/nss.png" alt="" class="logo1">
+                <img src="../assets/img/logo3.jpg" alt="" class="logo1">
 
             </div>
             <div>
@@ -37,19 +37,7 @@
                         </button>
 
 
-                        <!-- 
-                        <div>
-                            <button @click="OpenModalRegister" class="btn btn-success">Thay đổi thông tin </button>
-                        </div>
-
-                        <AModal :isShowModalRegister="isShowModalRegister" :closeModalRegister="closeModalRegister" /> -->
-
-                        <div>
-                            <button @click="OpenModalRegister" class="btn btn-success">Thông tin</button>
-                        </div>
-
-                        <AModal :isShowModalRegister="isShowModalRegister" :closeModalRegister="closeModalRegister"
-                            :userInformation="dataUser" />
+                        
 
                     </div>
                 </div>
@@ -89,7 +77,7 @@
                             <path d="M19 22v.01"></path>
                             <path d="M19 19a2.003 2.003 0 0 0 .914 -3.782a1.98 1.98 0 0 0 -2.414 .483"></path>
                         </svg>
-                        Đơn hàng của bạn
+                        Khóa Tu của bạn
                     </router-link>
 
 
@@ -113,10 +101,7 @@
 
 
 export default {
-    components: {
-        AModal,
-
-    },
+    
     data() {
         return {
             isLoggedIn: false,
@@ -180,40 +165,6 @@ export default {
 };
 </script>
 
-<!-- <script setup>
-import { ref } from "vue";
-import AModal from "./AModal.vue";
-
-
-const isShowModalRegister = ref(false)
-
-const OpenModalRegister = () => {
-    isShowModalRegister.value = true;
-};
-const closeModalRegister = () => {
-    isShowModalRegister.value = false;
-};
-</script> -->
-<script setup>
-import { ref } from "vue";
-import AModal from "./AModal.vue";
-
-const isShowModalRegister = ref(false);
-const dataUser = ref({
-    Email: "tienb2014620@gmail.com",
-    HoTen: "Bùi Văn Tiền",
-    SoDienThoai: "0123456789",
-    DiaChi: "Cần Thơ"
-});
-
-const OpenModalRegister = () => {
-    isShowModalRegister.value = true;
-};
-
-const closeModalRegister = () => {
-    isShowModalRegister.value = false;
-};
-</script>
 
 
 <style scoped>
@@ -272,7 +223,7 @@ const closeModalRegister = () => {
 }
 
 .navi {
-    background-color: #1b7931;
+    background-color: #b1900b;
     /* Màu nền xanh */
     display: flex;
     align-items: center;

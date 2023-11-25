@@ -13,23 +13,21 @@
        " src="https://theme.hstatic.net/1000363117/1000911694/14/lazyload.gif?v=271" width="250px" />
             </div>
             <div class="col-sm-6">
-                <h3>Đặt hàng thành công</h3>
+                <h3>Đăng ký thành công</h3>
 
-                <div v-for="order in filteredOrders" :key="order.customerInfo._id">
+                <div v-for="(order, index) in filteredOrders" :key="index">
                     <label><b>MSKH:</b></label>
                     <label>{{ order.MSKH }}</label> <br>
                     <label><b>Tên:</b>{{ order.customerInfo.name }}</label><br>
                     <label><b>Số điện thoại:</b> {{ order.customerInfo.phoneNumber }}</label><br>
                     <label><b>Địa chỉ:</b> {{ order.customerInfo.address }}</label><br>
-                    <label><b>Phương thức thanh toán: </b>Tận nơi</label><br>
-                    <label><b>Địa chỉ:</b>{{ order.customerInfo.address }}</label><br>
-                </div>
-                <div v-for="order in filteredOrders" :key="order.customerInfo._id">
-                    <label><b>Ngày đặt hàng:</b> {{ order.NgayDH }}</label><br>
-                    <label><b>Ngày giao hàng:</b> {{ order.NgayGH }}</label><br>
+
+                
+                    <label><b>Ngày đăng ký:</b> {{ order.NgayDH }}</label><br>
 
 
-                    <label><b>Người giao hàng:</b> {{ order.employeeInfo.name }}</label><br>
+
+                    <label><b>Giảng sư:</b> {{ order.employeeInfo.name }}</label><br>
 
 
                     <!-- Button to confirm the status change -->
@@ -48,7 +46,7 @@
                     <thead>
                         <tr>
                             <th style="display: none;">id</th>
-                            <th scope="col">Sản phẩm</th>
+                            <th scope="col">Khóa tu</th>
                             <th style="width: 300px" scope="col"></th>
                             <th scope="col">Giá</th>
 
@@ -75,7 +73,7 @@
                     </tbody>
                     <tr>
                         <td style="background-color: #ccc;">
-                            <b>Tổng đơn hàng:</b>
+                            <b>Tổng học phí:</b>
                         </td>
                         <td></td>
                         <td></td>
@@ -99,7 +97,7 @@
             border: 0;
             cursor: pointer;
           " @click="clearCartAndNavigate">
-                    Tiếp tục mua hàng
+                    Tiếp tục xem khóa tu
                 </button>
 
             </router-link>
@@ -135,6 +133,18 @@ export default {
                 return total + cart.productDetails.Gia * cart.SoLuong;
             }, 0);
         },
+        groupedCarts() {
+            const groupedCarts = {};
+            this.filteredOrders.forEach((cart) => {
+                const orderId = cart.orderId; // Replace with the actual property that links carts to orders
+                if (!groupedCarts[orderId]) {
+                    groupedCarts[orderId] = [];
+                }
+                groupedCarts[orderId].push(cart);
+            });
+            return groupedCarts;
+        },
+
 
 
     },
@@ -179,7 +189,7 @@ export default {
                 console.error(error);
             }
         },
-       async clearCartAndNavigate() {
+        async clearCartAndNavigate() {
             // Clear the cart data
             try {
                 // Retrieve userId from localStorage
@@ -198,7 +208,7 @@ export default {
             }
 
             // Assuming you have a route named 'auth' defined in your router configuration
-            
+
         },
 
     },

@@ -21,6 +21,9 @@ class OrderService {
   async delete(id, data) {
     return (await this.api.delete(`/${id}`, data)).data;
   }
+  async deleteAll() {
+    return (await this.api.delete("/")).data;
+  }
 }
 
 export default new OrderService();

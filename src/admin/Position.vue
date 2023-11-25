@@ -8,7 +8,7 @@
         <table class="table align-middle mb-0 bg-white">
             <thead class="bg-light">
                 <tr>
-                    <th>Sản phẩm</th>
+                    <th>Khóa tu</th>
                     <th>Mô tả</th>
                     <th>Giá</th>
                     <th>Số lượng</th>

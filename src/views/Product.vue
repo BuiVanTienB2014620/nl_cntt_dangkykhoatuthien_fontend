@@ -21,10 +21,10 @@
           </div>
           <div class="product-info">
 
-            <p><b>Tên Sản Phẩm:</b> {{ product.TenHH }}</p>
-            <p><b>Xuất Xứ:</b> Hưng Yên</p>
-            <p><b>Hạn Sử Dụng:</b> 12 tháng</p>
-            <p><b>Công dụng:</b> {{ product.MoTaHH }}</p>
+            <p><b>Tên Khóa Tu:</b> {{ product.TenHH }}</p>
+            <p><b>Tỉnh thành: </b> Hưng Yên</p>
+            <p><b>Hạn gian:</b> 1 tháng</p>
+            <p><b> Lợi ích khóa học:</b> {{ product.MoTaHH }}</p>
             <div class="product-quantity">
               <button id="decrease-quantity" @click="decreaseQuantity">-</button>
               <span id="quantity">{{ SoLuongHH }}</span>
@@ -39,7 +39,7 @@
 
 
           <button id="add-to-cart" class="btn btn-success text-white" @click="addToCart">
-            Thêm vào giỏ hàng
+            Thêm mục đăng ký
           </button>
 
 

@@ -66,7 +66,7 @@
 
                 </div>
                 <div class="col-sm-6 px-0 d-none d-sm-block">
-                    <img src="https://img.freepik.com/free-photo/some-assorted-nuts-dried-fruits-with-pecan-pistachios-almond-peanut-cashew-pine-nuts-different-bowls-black-pan-flat-lay_176474-2063.jpg?w=1060&t=st=1699535762~exp=1699536362~hmac=18f9f79ee313643b2c3a075566c9891df6a7443ab82bb90b8fd93e40016d70b5"
+                    <img src="https://img.freepik.com/free-vector/isolated-flower-lotus-with-light-pink-petals-with-reflection-white-background-3d-vector-illustration_98292-11.jpg?2&t=st=1700831587~exp=1700832187~hmac=3af848cef6149dac0aaf5821c868ff55b57146c80124414baa0d10860718d4e3"
                         alt="Login image" class="w-100 vh-100" style="object-fit: cover; object-position: left;">
                 </div>
             </div>

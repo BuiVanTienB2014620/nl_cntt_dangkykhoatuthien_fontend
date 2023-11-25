@@ -5,7 +5,7 @@
     <Form @submit="submitProduct" :validation-schema="productFormSchema">
       <!-- Tên sản phẩm -->
       <div class="form-group">
-        <label for="TenHH">Tên sản phẩm:</label>
+        <label for="TenHH">Tên khóa tu:</label>
         <Field name="TenHH" type="text" class="form-control" v-model="productLocal.TenHH" required />
         <ErrorMessage name="TenHH" class="error-feedback"  style="color: rgb(238, 15, 15);" />
       </div>
