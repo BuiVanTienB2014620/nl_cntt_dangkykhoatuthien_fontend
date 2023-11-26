@@ -96,7 +96,7 @@
             border-radius: 18px;
             border: 0;
             cursor: pointer;
-          " @click="clearCartAndNavigate">
+          " >
                     Tiếp tục xem khóa tu
                 </button>
 

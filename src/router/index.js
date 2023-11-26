@@ -79,6 +79,11 @@ const routes = [
         component: () => import("@/admin/Directcard.vue"),
       },
       {
+        path: "statistical",
+        name: "statistical",
+        component: () => import("@/admin/statistical.vue"),
+      },
+      {
         path: "addposition",
         name: "addposition",
         component: () => import("@/admin/position/addposition.vue"),

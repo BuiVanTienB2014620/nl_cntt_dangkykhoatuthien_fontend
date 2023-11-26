@@ -38,7 +38,7 @@
                             </path>
                         </svg>
                         <router-link :to="{ name: 'admin-user' }" style="text-decoration: none; class " class="textp">
-                           Tài khoản hệ thống
+                            Tài khoản hệ thống
 
                         </router-link>
 
@@ -82,6 +82,24 @@
 
                         <router-link :to="{ name: 'dire' }" style="text-decoration: none; class " class="textp">
                             Quản lí đăng ký khóa tu
+                        </router-link>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-chart-bar" width="24"
+                            height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none"
+                            stroke-linecap="round" stroke-linejoin="round">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+                            <path d="M3 12m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v6a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                            <path d="M9 8m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                            <path d="M15 4m0 1a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v14a1 1 0 0 1 -1 1h-4a1 1 0 0 1 -1 -1z" />
+                            <path d="M4 20l14 0" />
+                        </svg>
+
+                        <router-link :to="{ name: 'statistical' }" style="text-decoration: none; class " class="textp">
+                           Thống kê người đăng ký / học phí
                         </router-link>
                     </td>
 
@@ -185,8 +203,7 @@ button {
     background-color: rgb(12, 113, 61);
     border-radius: 5px;
 
-}
-</style>
+}</style>
 
 
 
