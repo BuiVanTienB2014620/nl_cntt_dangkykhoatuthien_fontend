@@ -162,12 +162,12 @@ export default {
             this.orderStatus = 'Đã duyệt';
 
             // Delete all orders and carts
-            await OrderService.deleteAll(); // Assuming OrderService has a method to delete all orders
-            await CartService.deleteAll();  // Assuming CartService has a method to delete all carts
+            // await OrderService.deleteAll(); // Assuming OrderService has a method to delete all orders
+            // await CartService.deleteAll();  // Assuming CartService has a method to delete all carts
 
-            // Clear the local data arrays
-            this.orders = [];
-            this.carts = [];
+            // // Clear the local data arrays
+            // this.orders = [];
+            // this.carts = [];
 
         } catch (error) {
             console.error(error);

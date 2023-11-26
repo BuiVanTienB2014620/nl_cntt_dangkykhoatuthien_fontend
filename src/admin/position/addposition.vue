@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h1 class="d-flex justify-content-center">Thêm Sản phẩm</h1>
+        <h1 class="d-flex justify-content-center">Thêm khóa tu</h1>
         <add @submit:product="createProduct" />
         <p>{{ message }}</p>
     </div>

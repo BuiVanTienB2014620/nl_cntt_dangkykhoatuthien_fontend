@@ -39,7 +39,7 @@ export default {
                 }
             } catch (error) {
                 console.error("Login error:", error);
-                this.message = "Đã xảy ra lỗi trong quá trình đăng nhập";
+                this.message = "Đăng nhập thất bại, mật khẩu hoặc email chưa chính xác";
             }
         },
     },
