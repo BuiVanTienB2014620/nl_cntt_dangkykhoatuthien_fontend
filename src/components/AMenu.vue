@@ -99,7 +99,7 @@
                         </svg>
 
                         <router-link :to="{ name: 'statistical' }" style="text-decoration: none; class " class="textp">
-                           Thống kê người đăng ký / học phí
+                           Thống kê (giả định) người đăng ký / học phí trong năm
                         </router-link>
                     </td>
 

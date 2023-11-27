@@ -2,56 +2,64 @@
     <div class="row">
         <div class="col-sm-12" style="text-align: center;">
             <h3>Đăng ký khóa tu</h3>
-          
+
         </div>
 
-        <div class="col-sm-6">
+        <div class="col-sm-12">
 
             <div>
-                <label><b>Tổng học phí:</b></label>
+                <label><b>Tổng doanh thu:</b></label>
                 <label>{{ totalAmount }}.000 vnđ</label>
             </div>
-            <div v-for="order in orders" :key="order._id">
-                <div>----------------------------------------------</div>
-                <div><b>Giảng sư:</b>{{ order.employeeInfo.name }} </div>
+            <div style="display: flex;">
+                <div v-for="order in orders" :key="order._id">
+                    <div>----------------------------------------------------------------------------</div>
+                    <div><b>Giảng sư:</b>{{ order.employeeInfo.name }} </div>
 
 
-                <label><b>Thông tin thiền sinh:</b></label>
-                <ul>
-                    <li>
-                        <b>Tên:</b>{{ order.customerInfo.name }}
+                    <label><b>Thông tin thiền sinh:</b></label>
+                    <ul>
+                        <li>
+                            <b>Tên:</b>{{ order.customerInfo.name }}
 
-                    </li>
-                    <li> <b>Số điện thoại:</b> {{ order.customerInfo.phoneNumber }} </li>
-                    <li><b>Địa chỉ:</b>{{ order.customerInfo.address }}</li>
-                    <li> <b>Ngày đăng ký:</b> {{ getCurrentDate() }}</li>
-                    <li>
+                        </li>
+                        <li> <b>Số điện thoại:</b> {{ order.customerInfo.phoneNumber }} </li>
+                        <li><b>Địa chỉ:</b>{{ order.customerInfo.address }}</li>
+                        <li> <b>Ngày đăng ký:</b> {{ getCurrentDate() }}</li>
+                        <li>
 
-                        <b>Ngày bắt đầu:</b> {{ getExpectedDeliveryDate() }}
+                            <b>Ngày bắt đầu:</b> {{ getExpectedDeliveryDate() }}
 
-                    </li>
+                        </li>
 
-                </ul>
-                <div>----------------------------------------------</div>
+                    </ul>
+                    <div>----------------------------------------------------------------------------</div>
+                </div>
+
             </div>
             <div>
                 <label><b>Trạng thái:</b></label>
-                <span>{{ orderStatus }}</span>
-
-
+                <span :style="{ color: orderStatus === 'Chưa duyệt' ? 'red' : 'green' }">{{ orderStatus }}</span>
             </div>
-            <h4>Khóa học đã đăng ký:</h4>
+
+
+
+
+
+            <button class="btn btn-success" @click="approveOrder">Duyệt</button>
+
+            <h4 style="text-align: center;">Thống kê khóa học đã đăng ký</h4>
             <table class="table">
                 <thead>
-                    <tr>
-                        <th scope="col">Tên khóa học</th>
+                    <tr class="table-primary">
+                        <th scope="row">Tên khóa học</th>
                         <th scope="col">Giá</th>
                         <th scope="col">Số lượng</th>
                         <th scope="col">Thành tiền</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="cart in carts" :key="cart._id">
+                    <tr v-for="cart in carts" :key="cart._id" class="table-warning">
                         <td>{{ cart.productDetails.TenHH }}</td>
                         <td>{{ 1 * cart.productDetails.Gia }}.000 VNĐ</td>
                         <td>{{ cart.SoLuong }}</td>
@@ -59,7 +67,6 @@
                     </tr>
                 </tbody>
             </table>
-            <button class="btn btn-success" @click="approveOrder">Duyệt</button>
 
 
 
@@ -96,8 +103,8 @@ export default {
     },
     computed: {
         totalAmount() {
-            return this.filteredCarts.reduce((total, cart) => {
-                return total + cart.productDetails.Gia * cart.SoLuong;
+            return this.carts.reduce((total, cart) => {
+                return total + this.calculateTotal(cart);
             }, 0);
         },
         // filteredCarts() {
@@ -157,22 +164,22 @@ export default {
             }
         },
         async approveOrder() {
-        try {
-            // Update the orderStatus in data
-            this.orderStatus = 'Đã duyệt';
+            try {
+                // Update the orderStatus in data
+                this.orderStatus = 'Đã duyệt';
 
-            // Delete all orders and carts
-            // await OrderService.deleteAll(); // Assuming OrderService has a method to delete all orders
-            // await CartService.deleteAll();  // Assuming CartService has a method to delete all carts
+                // Delete all orders and carts
+                // await OrderService.deleteAll(); // Assuming OrderService has a method to delete all orders
+                // await CartService.deleteAll();  // Assuming CartService has a method to delete all carts
 
-            // // Clear the local data arrays
-            // this.orders = [];
-            // this.carts = [];
+                // // Clear the local data arrays
+                // this.orders = [];
+                // this.carts = [];
 
-        } catch (error) {
-            console.error(error);
-        }
-    },
+            } catch (error) {
+                console.error(error);
+            }
+        },
 
 
     },
@@ -182,4 +189,8 @@ export default {
     },
 };
 </script>
-  
+<style scoped>
+.td {
+    display: flex;
+}
+</style>
